@@ -1,31 +1,23 @@
 import { useEffect, useState } from 'react';
 import MealItem from "./mealItem";
+import mealsData from "../data/meals";
 
 const Meals = () => {
     const [loadedMeals, setLoadedMeals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    async function fetchMeals() {
-        setIsLoading(true);
-        try {
-            const response = await fetch("http://localhost:3000/meals");
-            const data = await response.json();
-            console.log(data);
-            setLoadedMeals(data);
-        } catch (error) {
-            console.error('Failed to fetch meals:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     useEffect(() => {
-        fetchMeals();
+        // Simulate loading for better UX
+        const timer = setTimeout(() => {
+            setLoadedMeals(mealsData);
+            setIsLoading(false);
+        }, 500);
+        
+        return () => clearTimeout(timer);
     }, []);
 
     return (
         <>
-         
             {isLoading ? (
                 <div className="meals-loader">
                     <div className="loader-spinner"></div>
