@@ -20,7 +20,7 @@ const MealItem = ({ meal }) => {
           
 
   
-            <img src={`http://localhost:3000/images/${meal.image.split('/').pop()}`} alt={meal.name} />
+            <img src={meal.image} alt={meal.name} />
 
             <h3 className="meal-item-title">{meal.name.substring(0, 15)}</h3>
             <h2 className="meal-item-price">{meal.price}</h2>
