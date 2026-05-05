@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 import MealItem from "./mealItem";
-import mealsData from "../data/meals";
 
 const Meals = () => {
     const [loadedMeals, setLoadedMeals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        // Simulate loading for better UX
-        const timer = setTimeout(() => {
-            setLoadedMeals(mealsData);
+    async function fetchMeals() {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/meals`);
+            const data = await response.json();
+            console.log(data);
+            setLoadedMeals(data);
+        } catch (error) {
+            console.error('Failed to fetch meals:', error);
+        } finally {
             setIsLoading(false);
-        }, 500);
-        
-        return () => clearTimeout(timer);
+        }
+    }
+
+    useEffect(() => {
+        fetchMeals();
     }, []);
 
     return (
