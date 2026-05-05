@@ -80,15 +80,15 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         };
 
         try {
-            // Mock order submission for demo purposes
-            // In production, this would send to your backend
-            console.log('Order submitted:', orderData);
-            
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Simulate success (90% success rate for demo)
-            if (Math.random() > 0.1) {
+            const response = await fetch('https://your-backend-name.onrender.com/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ order: orderData })
+            });
+
+            if (response.ok) {
                 setSubmitStatus('success');
                 // Clear cart after successful order
                 cartContext.items.forEach(item => {
